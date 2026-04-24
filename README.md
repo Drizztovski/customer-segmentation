@@ -136,8 +136,25 @@ Opens at `http://localhost:8501`
 ---
  
 ## Screenshots
- 
-*Screenshots coming soon.*
+
+### Dashboard — Home Screen & RFM Distributions
+Full dashboard view showing the styled header, RFM distribution histograms, sidebar cluster plot, and Try Different K controls.
+
+![Dashboard Overview](screenshots/dashboard_example.png)
+
+---
+
+### Cluster Results — Summary, Comparison & PCA Projection
+Cluster summary table, side-by-side cluster comparison, PCA 2D scatter plot, and mean RFM bar charts per cluster.
+
+![Cluster Results](screenshots/cluster_example.png)
+
+---
+
+### AI Personas — Gemini-Generated Marketing Personas
+Gemini generates a persona name, behavioral profile, and 3 targeted marketing recommendations for each customer segment.
+
+![AI Personas](screenshots/persona_example.png)
  
 ---
  

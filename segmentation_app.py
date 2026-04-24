@@ -12,6 +12,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from sklearn.decomposition import PCA
 import sys
 import os
 
@@ -143,6 +144,7 @@ if run_button:
             st.session_state.engine = engine
             st.session_state.segmentation_run = True
             st.toast("Segmentation complete!", icon="✅")
+            st.rerun()
         except Exception as e:
             st.error(f"Error running segmentation: {e}")
 
