@@ -80,6 +80,18 @@ with st.sidebar:
     st.divider()
 
     if st.session_state.get('segmentation_run'):
+        _e = st.session_state.engine
+        st.markdown("""
+        <div style="background-color:#1A3A2A; padding:0.8rem 1rem; border-radius:8px;
+                    border-left:4px solid #4CAF50; margin-bottom:0.5rem;">
+            <span style="color:#4CAF50; font-weight:bold;">✅ Segmentation Complete</span>
+        </div>
+        """, unsafe_allow_html=True)
+        st.caption(f"👥 {_e.rfm_df.shape[0]:,} customers · {len(_e.rfm_df['Cluster'].unique())} clusters")
+        st.caption(f"📅 {_e.clean_df['InvoiceDate'].min().strftime('%b %Y')} – {_e.clean_df['InvoiceDate'].max().strftime('%b %Y')}")
+        st.divider()
+
+    if st.session_state.get('segmentation_run'):
         st.subheader("🔄 Try Different K")
         new_k = st.slider(
             "Re-run with a new K value",
@@ -273,4 +285,75 @@ if st.session_state.segmentation_run:
                 st.info("Click **Generate Personas** above to get AI-powered marketing personas for each cluster.")
 
 else:
-    st.info("Configure settings in the sidebar and click **🚀 Run Segmentation** to get started.")
+    st.markdown("""
+    <div style="background-color:#1E2A3A; padding:1.5rem 2rem; border-radius:10px;
+                border-left:5px solid #4FC3F7; margin-bottom:1.5rem;">
+        <h3 style="color:#FAFAFA; margin:0 0 0.5rem 0;">👋 Welcome to the Customer Segmentation Dashboard</h3>
+        <p style="color:#B0C4D8; margin:0; font-size:0.95rem;">
+            This tool uses <strong style="color:#4FC3F7;">RFM Analysis</strong> and
+            <strong style="color:#4FC3F7;">K-Means Clustering</strong> to group customers
+            by purchasing behavior — then uses Google Gemini to generate actionable
+            marketing personas for each segment.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("### ⚙️ Configuration Guide")
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.markdown("""
+        <div style="background-color:#1A2332; padding:1rem; border-radius:8px; margin-bottom:1rem;">
+            <p style="color:#4FC3F7; font-weight:bold; margin:0 0 0.3rem 0;">📁 Data File Path</p>
+            <p style="color:#B0C4D8; font-size:0.88rem; margin:0;">
+                Points to your transaction CSV file. The default
+                <strong>data/online_retail_sample.csv</strong> is already
+                included and ready to use.
+            </p>
+        </div>
+        <div style="background-color:#1A2332; padding:1rem; border-radius:8px; margin-bottom:1rem;">
+            <p style="color:#4FC3F7; font-weight:bold; margin:0 0 0.3rem 0;">🔢 Number of Clusters (K)</p>
+            <p style="color:#B0C4D8; font-size:0.88rem; margin:0;">
+                How many customer groups to create. The app will show you
+                elbow and silhouette charts to help you pick the right value.
+                <strong>4 is a solid starting point</strong> for most retail datasets.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with col2:
+        st.markdown("""
+        <div style="background-color:#1A2332; padding:1rem; border-radius:8px; margin-bottom:1rem;">
+            <p style="color:#4FC3F7; font-weight:bold; margin:0 0 0.3rem 0;">🤖 Gemini API Key</p>
+            <p style="color:#B0C4D8; font-size:0.88rem; margin:0;">
+                Optional — only needed for AI persona generation in the Personas tab.
+                The full segmentation and clustering runs without it.
+                Get a free key at <strong>aistudio.google.com/apikey</strong>.
+            </p>
+        </div>
+        <div style="background-color:#1A2332; padding:1rem; border-radius:8px; margin-bottom:1rem;">
+            <p style="color:#4FC3F7; font-weight:bold; margin:0 0 0.3rem 0;">🚀 Ready to start?</p>
+            <p style="color:#B0C4D8; font-size:0.88rem; margin:0;">
+                Leave all settings at their defaults, click
+                <strong>Run Segmentation</strong>, and explore your customer segments
+                across the three result tabs. Takes about 10 seconds to run.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+    st.divider()
+    st.markdown("### 💡 What You'll Get")
+    sample_cols = st.columns(3)
+    samples = [
+        "📊 RFM distributions across your customer base",
+        "🔵 PCA cluster visualization with segment comparison",
+        "🤖 AI-generated marketing personas per segment",
+    ]
+    for i, q in enumerate(samples):
+        with sample_cols[i]:
+            st.markdown(f"""
+            <div style="background-color:#1A2332; padding:0.7rem 1rem; border-radius:8px;
+                        border:1px solid #2A3A4A;">
+                <p style="color:#B0C4D8; font-size:0.88rem; margin:0;">{q}</p>
+            </div>
+            """, unsafe_allow_html=True)
